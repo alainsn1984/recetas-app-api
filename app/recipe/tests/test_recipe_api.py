@@ -19,7 +19,7 @@ def create_recipe(user, **params):
     defaults = {
         'title': 'Sample recipe title',
         'time_minute': 22,
-        'price': Decimal(25),
+        'price': Decimal(5.25),
         'description': 'Sample description',
         'link': 'http://example.com/recipe.pdf'
     }
@@ -49,10 +49,11 @@ class PrivateAPITest(TestCase):
             'user@example.com',
             'testpass123'
         )
+        self.client.force_authenticate(self.user)
     def test_retrieve_recipes(self):
         """Test retrieving a list of recipes."""
-        create_recipe(user=self.user, {})
-        create_recipe(user=self.user, {})
+        create_recipe(user=self.user)
+        create_recipe(user=self.user)
 
         res = self.client.get(RECIPES_URL)
 
@@ -62,7 +63,7 @@ class PrivateAPITest(TestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_recipe_list_limited_to_user(self):
-        """Test list of recipes limited to authenticated user."""
+        """Test list of recipes is limited to authenticated user."""
         other_user = get_user_model().objects.create_user(
             'otheruser@example.com',
             'testpass123'
