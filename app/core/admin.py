@@ -5,7 +5,7 @@ from django.contrib import admin  # noqa
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin  # noqa
 from django.utils.translation import gettext_lazy as _ # noqa
 
-from . import models  # noqa
+from core import models  # noqa
 
 
 class UserAdmin(BaseUserAdmin):
@@ -47,3 +47,4 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.Recipe)
+admin.site.register(models.Tag)
